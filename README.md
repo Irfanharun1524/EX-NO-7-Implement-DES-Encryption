@@ -13,35 +13,39 @@ To use the Data Encryption Standard (DES) algorithm for a practical application,
 
 ## Program:
 ```
-def xor_encrypt(text, key):
-    result = ""
+#include <stdio.h>
+#include <string.h>
+void xorCrypt(char *in, char *key, char *out, int len)
+{
+  for (int i = 0; i < len; i++) out[i] = in[i] ^ key[i % strlen(key)];
+  out[len] = 0;
+}
+int main() 
+{
+  char msg[100], key[100], enc[100], dec[100];
+  printf("Enter message: "); fgets(msg, 100, stdin);
+  msg[strcspn(msg, "\n")] = 0;
+  printf("Enter key: "); fgets(key, 100, stdin);
+  key[strcspn(key, "\n")] = 0;
 
-    for i in range(len(text)):
-        ch = chr(ord(text[i]) ^ ord(key[i % len(key)]))
-        result += ch
+  int len = strlen(msg);
+  xorCrypt(msg, key, enc, len);
+  printf("Encrypted: ");
+  for (int i = 0; i < len; i++) printf("%02X ", (unsigned char)enc[i]);
+  printf("\n");
 
-    return result
+  xorCrypt(enc, key, dec, len);
+  printf("Decrypted: %s\n", dec);
+  return 0;
+}
 
-message = input("Enter message: ")
-key = input("Enter key: ")
-
-encrypted = xor_encrypt(message, key)
-
-print("Encrypted:", end=" ")
-for ch in encrypted:
-    print(format(ord(ch), "02X"), end=" ")
-
-decrypted = xor_encrypt(encrypted, key)
-
-print("\nDecrypted:", decrypted)
 
 ```
 
 
 
 ## Output:
-<img width="661" height="1015" alt="Screenshot (1)" src="https://github.com/user-attachments/assets/e67a127f-d881-4095-bfcb-835526a6597d" />
-
+<img width="1155" height="742" alt="EXP 7" src="https://github.com/user-attachments/assets/ea2c4e31-371c-45d0-9461-da9c4f11a8d3" />
 
 
 
